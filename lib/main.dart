@@ -35,7 +35,7 @@ class _MyAppState extends State <MyApp>{
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('My First Bar'),
+          title: Text('My First App'),
         ),
         body: Column(
           // ignore: prefer_const_literals_to_create_immutables
