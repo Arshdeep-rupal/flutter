@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Question extends StatelessWidget {
   final String questionText;
 
-  Question(this.questionText);
+  Question(this.questionText, [List<Map<String,Object>>? list]);
 
   @override
   Widget build(BuildContext context) {

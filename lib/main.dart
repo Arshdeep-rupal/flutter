@@ -16,10 +16,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  static const questions = [
+    {
+      'questionText': 'What\'s your favorite color ?',
+      'answer': ['black', 'red', 'green', 'white'],
+    },
+    {
+      'questionText': 'What\'s your favorite animal ?',
+      'answer': ['dog', 'cat', 'horse', 'lion'],
+    },
+    {
+      'questionText': 'what\'s your favorite language ?',
+      'answer': ['c++', 'Dart', 'java', 'python'],
+    },
+  ];
   var _questionIndex = 0;
 
   void _answerQuestion() {
-  setState(() {
+    if (_questionIndex < questions.length) {
+      print('we have more quiestion');
+    }
+    setState(() {
       _questionIndex = _questionIndex + 1;
     });
     print(_questionIndex);
@@ -27,27 +44,25 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      'What\'s your favorite color ?',
-      'What\'s your favorite animal ?',
-      'what\'s your favorite language ?',
-    ];
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('My First App'),
         ),
-        body: Column(
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            Question(
-              questions[_questionIndex],
-            ),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-          ],
-        ),
+        body: _questionIndex < questions.length
+            ? Column(
+                // ignore: prefer_const_literals_to_create_immutables
+                children: [
+                  Question(
+                    questions[_questionIndex]['questionText'].toString(),
+                  ),
+                  ...(questions[_questionIndex]['answer'] as List<String>)
+                      .map((answer) {
+                    return Answer(_answerQuestion, answer);
+                  }).toList()
+                ],
+              )
+            : Center(child: Text('you dd it! ')),
       ),
     );
   }
