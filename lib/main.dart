@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'package:quizz/answer.dart';
 
-import './question.dart';
-import './answer.dart';
+import './quizz.dart';
+import './result.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,27 +17,45 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  static const questions = [
+  static const _questions = [
     {
       'questionText': 'What\'s your favorite color ?',
-      'answer': ['black', 'red', 'green', 'white'],
+      'answer': [
+        {'text': 'black', 'score': 10},
+        {'text': 'red', 'score': 5},
+        {'text': 'green', 'score': 3},
+        {'text': 'white', 'score': 1}
+      ],
     },
     {
       'questionText': 'What\'s your favorite animal ?',
-      'answer': ['dog', 'cat', 'horse', 'lion'],
+      'answer': [
+        {'text': 'dog','score': 2 },
+        {'text': 'cat','score': 5 },
+        {'text': 'horse','score': 10 },
+        {'text': 'lion','score': 1 }
+      ],
     },
     {
       'questionText': 'what\'s your favorite language ?',
-      'answer': ['c++', 'Dart', 'java', 'python'],
+      'answer': [
+        {'text': 'c++','score': 10 },
+        {'text': 'Dart','score': 7 },
+        {'text': 'java','score': 3 },
+        {'text': 'python','score': 5 }
+      ],
     },
   ];
   var _questionIndex = 0;
+  var _totalScore = 0;
+  
 
-  void _answerQuestion() {
-    if (_questionIndex < questions.length) {
-      print('we have more quiestion');
-    }
+  void _answerQuestion(int score) {
+
+    _totalScore =_totalScore + score;
+
     setState(() {
+      
       _questionIndex = _questionIndex + 1;
     });
     print(_questionIndex);
@@ -49,21 +68,18 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('My First App'),
         ),
-        body: _questionIndex < questions.length
-            ? Column(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  Question(
-                    questions[_questionIndex]['questionText'].toString(),
-                  ),
-                  ...(questions[_questionIndex]['answer'] as List<String>)
-                      .map((answer) {
-                    return Answer(_answerQuestion, answer);
-                  }).toList()
-                ],
+        body: _questionIndex < _questions.length
+            ? Quiz(
+                answerQuestion: _answerQuestion,
+                questionIndex: _questionIndex,
+                questions: _questions,
               )
-            : Center(child: Text('you dd it! ')),
+            : Result(_totalScore),
       ),
     );
   }
 }
+
+
+//
+//int score
