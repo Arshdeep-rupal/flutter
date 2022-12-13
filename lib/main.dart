@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:quizz/answer.dart';
 
 import './quizz.dart';
 import './result.dart';
@@ -9,8 +8,11 @@ import './result.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   State<StatefulWidget> createState() {
+    // ignore: todo
     // TODO: implement createState
     return _MyAppState();
   }
@@ -31,9 +33,9 @@ class _MyAppState extends State<MyApp> {
       'questionText': 'What\'s your favorite animal ?',
       'answer': [
         {'text': 'dog','score': 2 },
-        {'text': 'cat','score': 5 },
-        {'text': 'horse','score': 10 },
-        {'text': 'lion','score': 1 }
+        {'text': 'cat','score': 1 },
+        {'text': 'horse','score': 6 },
+        {'text': 'lion','score': 10 }
       ],
     },
     {
@@ -49,15 +51,21 @@ class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
   var _totalScore = 0;
   
+  void _resetQuiz(){
+    setState(() {
+      _questionIndex = 0;
+    _totalScore = 0;
+    });
+  }
 
   void _answerQuestion(int score) {
 
-    _totalScore =_totalScore + score;
+    _totalScore += score;
 
-    setState(() {
-      
+    setState(() { 
       _questionIndex = _questionIndex + 1;
     });
+    // ignore: avoid_print
     print(_questionIndex);
   }
 
@@ -74,12 +82,10 @@ class _MyAppState extends State<MyApp> {
                 questionIndex: _questionIndex,
                 questions: _questions,
               )
-            : Result(_totalScore),
+            : Result(_totalScore,_resetQuiz),
       ),
     );
   }
 }
 
 
-//
-//int score

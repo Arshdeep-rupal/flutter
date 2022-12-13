@@ -6,9 +6,10 @@ import './answer.dart';
 class Quiz extends StatelessWidget {
   final List<Map<String, Object>> questions;
   final int questionIndex;
-  final void Function() answerQuestion;
+  final Function answerQuestion;
 
-  Quiz(
+  // ignore: use_key_in_widget_constructors, prefer_const_constructors_in_immutables
+    Quiz(
       {required this.questions,
       required this.answerQuestion,
       required this.questionIndex});
@@ -22,7 +23,7 @@ class Quiz extends StatelessWidget {
           questions[questionIndex]['questionText'].toString(),
         ),
         ...(questions[questionIndex]['answer'] as List<Map<String,Object>>).map((answer) {
-          return Answer(() => answerQuestion(answer['score']),answer['text']);
+          return Answer(() => answerQuestion(answer['score']),answer['text']as String);
         }).toList()
       ],
     );
